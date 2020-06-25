@@ -26,6 +26,7 @@ def draw():
     mouse = PVector(mouseX, mouseY)
     vehicle.update()
     vehicle.display()
+    food.update(vehicle)
     food.display()
     
 def keyTyped():

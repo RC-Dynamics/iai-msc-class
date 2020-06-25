@@ -6,8 +6,9 @@ class Food():
         self.position = PVector(x, y)
         self.r = 6
 
-    def update(self):
-        pass
+    def update(self, vehicle):
+        if PVector.dist(self.position, vehicle.position) < (2 * self.r):
+            self.position = PVector(random(width), random(height))
 
     def display(self):
         fill(127)
