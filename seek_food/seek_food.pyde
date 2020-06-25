@@ -11,19 +11,22 @@
 # See: http://www.red3d.com/cwr/
 
 from Vehicle import Vehicle
+from Food import Food
 
 def setup():
     global vehicle
+    global food
     size(640, 360)
     velocity = PVector(0, 0)
     vehicle = Vehicle(width / 2, height / 2, velocity)
+    food = Food(random(width), random(height))
 
 def draw():
     background(255)
     mouse = PVector(mouseX, mouseY)
-    # vehicle.seek(mouse)
     vehicle.update()
     vehicle.display()
+    food.display()
     
 def keyTyped():
     if key == 'w':
