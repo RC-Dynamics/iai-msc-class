@@ -2,9 +2,9 @@
 # Daniel Shiffman
 # http://natureofcode.com
 #
-# Modified by Filipe Calegario
+# Modified by Lucas Cavalcanti and Roberto Fernandes
 
-# Draws a "vehicle" on the screen
+# Vehicle that seeks food
 
 # Implements Craig Reynold's autonomous steering behaviors
 # One vehicle "seeks"
