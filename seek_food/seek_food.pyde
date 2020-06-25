@@ -14,7 +14,7 @@ from Vehicle import Vehicle
 from Food import Food
 
 total_food = 0
-    
+
 def setup():
     global vehicle
     global food
@@ -31,7 +31,9 @@ def draw():
     vehicle.display()
     total_food += food.update(vehicle)
     food.display()
-    print(total_food)
+    
+    textSize(22)
+    text('Comidas coletadas: ' + str(total_food), 10, 30)
     
 def keyTyped():
     if key == 'w':
