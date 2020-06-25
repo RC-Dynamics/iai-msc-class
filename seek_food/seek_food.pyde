@@ -13,6 +13,8 @@
 from Vehicle import Vehicle
 from Food import Food
 
+total_food = 0
+    
 def setup():
     global vehicle
     global food
@@ -22,12 +24,14 @@ def setup():
     food = Food(random(width), random(height))
 
 def draw():
+    global total_food
     background(255)
     mouse = PVector(mouseX, mouseY)
     vehicle.update()
     vehicle.display()
-    food.update(vehicle)
+    total_food += food.update(vehicle)
     food.display()
+    print(total_food)
     
 def keyTyped():
     if key == 'w':
