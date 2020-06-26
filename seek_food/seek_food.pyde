@@ -31,8 +31,8 @@ def draw():
     vehicle.display()
     total_food += food.update(vehicle)
     food.display()
-    
-    textSize(22)
+    vehicle.seek(food.position)
+    textSize(20)
     text('Comidas coletadas: ' + str(total_food), 10, 30)
     
 def keyTyped():
