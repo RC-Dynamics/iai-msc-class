@@ -1,5 +1,5 @@
 # iai-msc-class
 Intelligente Agentes Introduction
-- [Activity 01 - Seek Food](/iai-msc-class/01-seek-food)
-  - A food appear and the vehicle needs to reach it to "eat". 
-  - After the food cosumption, the environment creates a new food in a random position.
+- Activity 01 - [Seek Food](/01-seek-food/) - [p5.js demo](/iai-msc-class/01-seek-food/p5.js/)
+  - A food appear and the vehicle needs to "eat" it. 
+  - When food is aten, the environment creates a new food in a random position.
