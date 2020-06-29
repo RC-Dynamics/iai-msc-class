@@ -2,8 +2,8 @@
 ## Intelligente Agentes Introduction @ CIn - UFPE 2020.1
 
 ### Requirements:
-- For python codes use [Processing](https://processing.org/) with [python module](https://github.com/jdf/processing.py)
-- For p5.js any served that supports JS, a good development option is [Live Server](https://marketplace.visualstudio.com/items?itemName=ritwickdey.LiveServer)
+- For python codes use [Processing](https://processing.org/) with [python module](https://github.com/jdf/processing.py).
+- For p5.js use web server, a development option is [Live Server](https://marketplace.visualstudio.com/items?itemName=ritwickdey.LiveServer).
 
 ## Activities
 
