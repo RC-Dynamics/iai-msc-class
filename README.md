@@ -8,7 +8,7 @@
 ## Activities
 
 
-### Activity 01 
+### Activity 01 - Seek Food
 - Code for [Seek Food](https://github.com/RC-Dynamics/iai-msc-class/tree/master/01-seek-food).
 - Browser [Demo in p5.js](https://rc-dynamics.github.io/iai-msc-class/01-seek-food/p5.js/)
 - Objectives:
