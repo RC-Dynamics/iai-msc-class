@@ -20,11 +20,6 @@ class Food {
 		}
   }
 
-  applyForce(force) {
-    // We could add mass here if we want A = F / M
-    this.acceleration.add(force);
-  }
-
   display() {
 		fill(0);
 		noStroke();
