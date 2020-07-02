@@ -24,5 +24,5 @@ function draw() {
   v.seek(f.position);
   
   textSize(20);
-  text('Comidas: ' + str(total_f), 10, 30);
+  text('Foods: ' + str(total_f), 10, 30);
 }
