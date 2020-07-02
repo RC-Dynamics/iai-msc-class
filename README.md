@@ -12,7 +12,7 @@
 - Code for [Seek Food](https://github.com/RC-Dynamics/iai-msc-class/tree/master/01-seek-food).
 - Browser [Demo in p5.js](https://rc-dynamics.github.io/iai-msc-class/01-seek-food/p5.js/)
 
-![ ](https://github.com/RC-Dynamics/iai-msc-class/tree/master/01-seek-food/agent-food.gif)
+![](/01-seek-food/agent-food.gif)
 - Objectives:
   - A food appear and the vehicle needs to "eat" it. 
   - When food is aten, the environment creates a new food in a random position.
