@@ -33,7 +33,7 @@ def draw():
     food.display()
     vehicle.seek(food.position)
     textSize(20)
-    text('Comidas coletadas: ' + str(total_food), 10, 30)
+    text('Comidas: ' + str(total_food), 10, 30)
     
 def keyTyped():
     if key == 'w':

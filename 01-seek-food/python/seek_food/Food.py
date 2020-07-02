@@ -13,7 +13,7 @@ class Food():
         return 0
 
     def display(self):
-        fill(127)
+        fill(0)
         noStroke()
         strokeWeight(1)
         with pushMatrix():

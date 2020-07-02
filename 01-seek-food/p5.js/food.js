@@ -26,7 +26,7 @@ class Food {
   }
 
   display() {
-		fill(127);
+		fill(0);
 		noStroke();
     strokeWeight(1);
     push();
