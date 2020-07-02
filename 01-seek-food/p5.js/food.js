@@ -12,7 +12,7 @@ class Food {
 
   // Method to update location
   update(vehicle) {
-    if (p5.Vector.dist(this.position, vehicle.position) < (2 * this.r)) {
+    if (p5.Vector.dist(this.position, vehicle.position) < (this.r)) {
 			this.position = createVector(Math.random()*width, Math.random()*height);
 			return 1;
 		} else {
@@ -25,7 +25,7 @@ class Food {
 		noStroke();
     strokeWeight(1);
     push();
-    translate(this.position.x, this.position.y);
+    translate(this.position.x-this.r/2, this.position.y-this.r/2);
     rect(0, 0, this.r, this.r);
     pop();
   }
