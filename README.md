@@ -21,3 +21,9 @@
 ### 02 - Seek Food - BFS
 - Code for [Seek Food - BFS](https://github.com/RC-Dynamics/iai-msc-class/tree/master/02-bfs).
 - Browser [Demo in p5.js](https://rc-dynamics.github.io/iai-msc-class/02-bfs)
+
+- Objectives:
+  - When the environment is creates some cells are defined as walls.
+  - A BFS is used to plan the path to the food.
+  - A food appear and the vehicle needs to "eat" it. 
+  - When food is aten, the environment creates a new food in a random position.
