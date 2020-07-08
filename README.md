@@ -1,4 +1,4 @@
-# iai-msc-class
+# [iai-msc-class](https://github.com/RC-Dynamics/iai-msc-class)
 ## Intelligente Agentes Introduction @ CIn - UFPE 2020.1
 
 ### Requirements:
