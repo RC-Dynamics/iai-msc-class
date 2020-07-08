@@ -15,6 +15,7 @@ var grid = new Array(cols);
 // Open and closed set
 var openSet = [];
 var closedSet = [];
+var finalPath = [];
 
 // Start and end
 var start;
@@ -63,13 +64,18 @@ function setup() {
 }
 
 function draw() {
-  // closedSet = []
+  for (var i = 0; i < cols; i++) {
+    for (var j = 0; j < rows; j++) {
+      grid[i][j].previous = undefined;
+    }
+  }
+  closedSet = finalPath.slice()
+  var current;
 
   // Am I still searching?
   while (openSet.length > 0) {
     // Best next option
-    console.log(openSet[0])
-    var current = openSet[0];
+    current = openSet[0];
 
     // Did I finish?
     if (current === end) {
@@ -118,9 +124,11 @@ function draw() {
     temp = temp.previous;
   }
   path.reverse();
+  finalPath.push(path[0])
   start = path[1]
   openSet = []
   openSet.push(start);
+  console.log(start)
 
 
   // Drawing path as continuous line
@@ -131,13 +139,13 @@ function draw() {
   vertex(path[0].i * w + w / 2, path[0].j * h + h / 2);
   vertex(path[0].i * w + w / 2, path[0].j * h + h / 2);
   endShape();
-  
+
   beginShape();
   stroke(0, 255, 200);
   vertex(end.i * w + w / 2, end.j * h + h / 2);
   vertex(end.i * w + w / 2, end.j * h + h / 2);
   endShape();
-  // sleep(200);
+  sleep(1000);
 }
 
 function sleep(milliseconds) {
