@@ -6,8 +6,8 @@
 // Part 3: https://youtu.be/jwRT4PCT6RU
 
 // How many columns and rows?
-var cols = 10;
-var rows = 10;
+var cols = 50;
+var rows = 50;
 
 // This will be the 2D array
 var grid = new Array(cols);
@@ -28,7 +28,7 @@ var w, h;
 var path = [];
 
 function setup() {
-  createCanvas(400, 400);
+  createCanvas(600, 600);
 
   // Grid cell size
   w = width / cols;
@@ -55,7 +55,14 @@ function setup() {
 
   // Start and end
   start = grid[0][0]; // TODO: Posicao aleatoria
-  end = grid[cols - 1][rows - 1]; // TODO: Posicao aleatoria
+  var c_end = Math.floor(random(cols));
+  var r_end = Math.floor(random(rows));
+  end = grid[c_end][r_end];
+  while (end.wall){
+    c_end = Math.floor(random(cols));
+    r_end = Math.floor(random(rows));
+    end = grid[c_end][r_end];
+  }
   start.wall = false;
   end.wall = false;
 
@@ -69,8 +76,20 @@ function draw() {
       grid[i][j].previous = undefined;
     }
   }
-  closedSet = finalPath.slice()
   var current;
+
+  if (start === end) {
+    var c_end = Math.floor(random(cols));
+    var r_end = Math.floor(random(rows));
+    end = grid[c_end][r_end];
+    while (end.wall || start === end){
+      c_end = Math.floor(random(cols));
+      r_end = Math.floor(random(rows));
+      end = grid[c_end][r_end];
+    }
+    finalPath = []
+  }
+  closedSet = finalPath.slice()
 
   // Am I still searching?
   while (openSet.length > 0) {
@@ -79,7 +98,6 @@ function draw() {
 
     // Did I finish?
     if (current === end) {
-      console.log('end')
       break;
     }
 
@@ -102,9 +120,16 @@ function draw() {
   }
 
   if (current !== end) {
-      console.log('no solution');
-      noLoop();
-      return;
+    var c_end = Math.floor(random(cols));
+    var r_end = Math.floor(random(rows));
+    end = grid[c_end][r_end];
+    while (end.wall){
+      c_end = Math.floor(random(cols));
+      r_end = Math.floor(random(rows));
+      end = grid[c_end][r_end];
+    }
+    noLoop();
+    return;
     }
 
   // Draw current state of everything
@@ -119,6 +144,7 @@ function draw() {
   // Find the path by working backwards
   path = [];
   var temp = current;
+  path.push(temp);
   while (temp.previous) {
     path.push(temp.previous);
     temp = temp.previous;
@@ -128,7 +154,6 @@ function draw() {
   start = path[1]
   openSet = []
   openSet.push(start);
-  console.log(start)
 
 
   // Drawing path as continuous line
@@ -145,7 +170,7 @@ function draw() {
   vertex(end.i * w + w / 2, end.j * h + h / 2);
   vertex(end.i * w + w / 2, end.j * h + h / 2);
   endShape();
-  sleep(1000);
+  sleep(50);
 }
 
 function sleep(milliseconds) {
