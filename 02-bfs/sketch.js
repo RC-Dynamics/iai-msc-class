@@ -26,6 +26,7 @@ var w, h;
 
 // The road taken
 var path = [];
+let total_f = 0;
 
 function setup() {
   createCanvas(600, 600);
@@ -79,6 +80,7 @@ function draw() {
   var current;
 
   if (start === end) {
+    total_f++;
     var c_end = Math.floor(random(cols));
     var r_end = Math.floor(random(rows));
     end = grid[c_end][r_end];
@@ -166,10 +168,17 @@ function draw() {
   endShape();
 
   beginShape();
-  stroke(0, 255, 200);
+  stroke(0, 255, 150);
   vertex(end.i * w + w / 2, end.j * h + h / 2);
   vertex(end.i * w + w / 2, end.j * h + h / 2);
   endShape();
+  
+  noStroke();
+  fill(0,100,255);
+  textSize(20);
+  textStyle(BOLD);
+  text('Foods: ' + str(total_f), 10, 30);
+
   sleep(50);
 }
 

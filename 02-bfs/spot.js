@@ -12,11 +12,6 @@ function Spot(i, j) {
     this.i = i;
     this.j = j;
   
-    // f, g, and h values for A*
-    this.f = 0;
-    this.g = 0;
-    this.h = 0;
-  
     // Neighbors
     this.neighbors = [];
   
@@ -32,7 +27,7 @@ function Spot(i, j) {
     // Display me
     this.show = function(col) {
       if (this.wall) {
-        fill(0);
+        fill(170);
         noStroke();
         ellipse(this.i * w + w / 2, this.j * h + h / 2, w / 2, h / 2);
       } else if (col) {
