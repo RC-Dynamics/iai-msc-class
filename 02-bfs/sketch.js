@@ -144,7 +144,7 @@ function draw() {
   // OpenSet
   stroke(0, 0, 255, 100);
   for (var i = 0; i < openSet.length; i++) {
-    if (openSet[i] == start || openSet[i] == end)
+    if (openSet[i] == start)
       continue;
     beginShape();
     vertex(openSet[i].i * w + w / 2, openSet[i].j * h + h / 2);
