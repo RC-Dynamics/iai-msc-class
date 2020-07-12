@@ -40,26 +40,26 @@ function Spot(i, j) {
     this.addNeighbors = function(grid) {
       var i = this.i;
       var j = this.j;
-      if (i < cols - 1) {
-        this.neighbors.push(grid[i + 1][j]);
-      }
-      if (i > 0) {
-        this.neighbors.push(grid[i - 1][j]);
-      }
-      if (j < rows - 1) {
-        this.neighbors.push(grid[i][j + 1]);
+      if (i > 0 && j > 0) {
+        this.neighbors.push(grid[i - 1][j - 1]);
       }
       if (j > 0) {
         this.neighbors.push(grid[i][j - 1]);
       }
-      if (i > 0 && j > 0) {
-        this.neighbors.push(grid[i - 1][j - 1]);
-      }
       if (i < cols - 1 && j > 0) {
         this.neighbors.push(grid[i + 1][j - 1]);
       }
+      if (i > 0) {
+        this.neighbors.push(grid[i - 1][j]);
+      }
+      if (i < cols - 1) {
+        this.neighbors.push(grid[i + 1][j]);
+      }
       if (i > 0 && j < rows - 1) {
         this.neighbors.push(grid[i - 1][j + 1]);
+      }
+      if (j < rows - 1) {
+        this.neighbors.push(grid[i][j + 1]);
       }
       if (i < cols - 1 && j < rows - 1) {
         this.neighbors.push(grid[i + 1][j + 1]);
