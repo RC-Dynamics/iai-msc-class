@@ -6,8 +6,8 @@
 // Part 3: https://youtu.be/jwRT4PCT6RU
 
 // How many columns and rows?
-var cols = 50;
-var rows = 50;
+var cols = 10;
+var rows = 10;
 
 // This will be the 2D array
 var grid = new Array(cols);
@@ -59,16 +59,11 @@ function setup() {
   var c_end = Math.floor(random(cols));
   var r_end = Math.floor(random(rows));
   end = grid[c_end][r_end];
-  while (end.wall){
-    c_end = Math.floor(random(cols));
-    r_end = Math.floor(random(rows));
-    end = grid[c_end][r_end];
-  }
   start.wall = false;
   end.wall = false;
-
-  // openSet starts with beginning only
+  
   openSet.push(start);
+
 }
 
 function draw() {
@@ -78,50 +73,100 @@ function draw() {
     }
   }
   var current;
-
-  if (start === end) {
-    total_f++;
-    var c_end = Math.floor(random(cols));
-    var r_end = Math.floor(random(rows));
-    end = grid[c_end][r_end];
-    while (end.wall || start === end){
-      c_end = Math.floor(random(cols));
-      r_end = Math.floor(random(rows));
-      end = grid[c_end][r_end];
-    }
-    finalPath = []
-  }
-  closedSet = finalPath.slice()
+  console.log(openSet);
 
   // Am I still searching?
-  while (openSet.length > 0) {
+  if (openSet.length > 0) {
     // Best next option
     current = openSet[0];
-
+    
     // Did I finish?
-    if (current === end) {
-      break;
-    }
-
-    // Best option moves from openSet to closedSet
-    openSet.shift()
-    closedSet.push(current);
-
-    // Check all the neighbors
-    var neighbors = current.neighbors;
-    for (var i = 0; i < neighbors.length; i++) {
-      var neighbor = neighbors[i];
-
-      // Valid next spot?
-      if (!closedSet.includes(neighbor) && !openSet.includes(neighbor) && !neighbor.wall) {
-        neighbor.previous = current;
-        openSet.push(neighbor);
+    if (current !== end) {
+      // Best option moves from openSet to closedSet
+      openSet.shift()
+      closedSet.push(current);
+  
+      // Check all the neighbors
+      var neighbors = current.neighbors;
+      for (var i = 0; i < neighbors.length; i++) {
+        var neighbor = neighbors[i];
+  
+        // Valid next spot?
+        if (!closedSet.includes(neighbor) && !openSet.includes(neighbor) && !neighbor.wall) {
+          neighbor.previous = current;
+          openSet.push(neighbor);
+        }
       }
     }
-    // Uh oh, no solution
+  }
+  // Uh oh, no solution
+  else {
+    console.log('no solution')
+    noLoop();
+    return;
+  }
+  
+  // Draw current state of everything
+  background(255);
+  for (var i = 0; i < cols; i++) {
+    for (var j = 0; j < rows; j++) {
+      grid[i][j].show();
+    }
   }
 
-  if (current !== end) {
+  // Veiculo
+  noFill();
+  stroke(255, 0, 200);
+  strokeWeight(w / 2);
+  beginShape();
+  vertex(start.i * w + w / 2, start.j * h + h / 2);
+  vertex(start.i * w + w / 2, start.j * h + h / 2);
+  endShape();
+
+  // Comida
+  beginShape();
+  stroke(0, 255, 0);
+  vertex(end.i * w + w / 2, end.j * h + h / 2);
+  vertex(end.i * w + w / 2, end.j * h + h / 2);
+  endShape();
+
+  // ClosedSet
+  stroke(0, 0, 255, 50);
+  for (var i = 0; i < closedSet.length; i++) {
+    if (closedSet[i] == start || closedSet[i] == end)
+      continue;
+    beginShape();
+    vertex(closedSet[i].i * w + w / 2, closedSet[i].j * h + h / 2);
+    vertex(closedSet[i].i * w + w / 2, closedSet[i].j * h + h / 2);
+    endShape();
+  }
+
+  // OpenSet
+  stroke(0, 0, 255, 100);
+  for (var i = 0; i < openSet.length; i++) {
+    if (openSet[i] == start || openSet[i] == end)
+      continue;
+    beginShape();
+    vertex(openSet[i].i * w + w / 2, openSet[i].j * h + h / 2);
+    vertex(openSet[i].i * w + w / 2, openSet[i].j * h + h / 2);
+    endShape();
+  }
+
+  // Pontuacao
+  noStroke();
+  fill(0, 100, 255);
+  textSize(20);
+  textStyle(BOLD);
+  text('Foods: ' + str(total_f), 10, 30);
+
+  if (current === end){
+    start = end;
+    total_f++;
+
+    openSet = []
+    openSet.push(start);
+    closedSet = [];
+
     var c_end = Math.floor(random(cols));
     var r_end = Math.floor(random(rows));
     end = grid[c_end][r_end];
@@ -130,56 +175,10 @@ function draw() {
       r_end = Math.floor(random(rows));
       end = grid[c_end][r_end];
     }
-    noLoop();
-    return;
-    }
-
-  // Draw current state of everything
-  background(255);
-
-  for (var i = 0; i < cols; i++) {
-    for (var j = 0; j < rows; j++) {
-      grid[i][j].show();
-    }
   }
-
-  // Find the path by working backwards
-  path = [];
-  var temp = current;
-  path.push(temp);
-  while (temp.previous) {
-    path.push(temp.previous);
-    temp = temp.previous;
-  }
-  path.reverse();
-  finalPath.push(path[0])
-  start = path[1]
-  openSet = []
-  openSet.push(start);
-
-
-  // Drawing path as continuous line
-  noFill();
-  stroke(255, 0, 200);
-  strokeWeight(w / 2);
-  beginShape();
-  vertex(path[0].i * w + w / 2, path[0].j * h + h / 2);
-  vertex(path[0].i * w + w / 2, path[0].j * h + h / 2);
-  endShape();
-
-  beginShape();
-  stroke(0, 255, 150);
-  vertex(end.i * w + w / 2, end.j * h + h / 2);
-  vertex(end.i * w + w / 2, end.j * h + h / 2);
-  endShape();
   
-  noStroke();
-  fill(0,100,255);
-  textSize(20);
-  textStyle(BOLD);
-  text('Foods: ' + str(total_f), 10, 30);
-
-  sleep(50);
+  
+  sleep(200);
 }
 
 function sleep(milliseconds) {
