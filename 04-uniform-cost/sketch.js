@@ -6,8 +6,8 @@
 // Part 3: https://youtu.be/jwRT4PCT6RU
 
 // How many columns and rows?
-var cols = 10;
-var rows = 10;
+var cols = 15;
+var rows = 15;
 
 // This will be the 2D array
 var grid = new Array(cols);
