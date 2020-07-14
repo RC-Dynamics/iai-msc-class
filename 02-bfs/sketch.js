@@ -53,6 +53,7 @@ function setup() {
     }
   }
 
+  clear_previous();
 
   // Start and end
   start = grid[0][0]; // TODO: Posicao aleatoria
@@ -67,13 +68,7 @@ function setup() {
 }
 
 function draw() {
-  for (var i = 0; i < cols; i++) {
-    for (var j = 0; j < rows; j++) {
-      grid[i][j].previous = undefined;
-    }
-  }
   var current;
-  // console.log(openSet);
 
   // Am I still searching?
   if (openSet.length > 0) {
@@ -131,7 +126,7 @@ function draw() {
   endShape();
 
   // ClosedSet
-  stroke(0, 0, 255, 50);
+  stroke(0, 50, 255, 50);
   for (var i = 0; i < closedSet.length; i++) {
     if (closedSet[i] == start || closedSet[i] == end)
       continue;
@@ -142,7 +137,7 @@ function draw() {
   }
 
   // OpenSet
-  stroke(0, 0, 255, 100);
+  stroke(0, 0, 255, 120);
   for (var i = 0; i < openSet.length; i++) {
     if (openSet[i] == start)
       continue;
@@ -151,6 +146,23 @@ function draw() {
     vertex(openSet[i].i * w + w / 2, openSet[i].j * h + h / 2);
     endShape();
   }
+
+  // Find the current path and draw!
+  path = [];
+  var temp = current;
+  path.push(temp);
+  while (temp.previous) {
+    path.push(temp.previous);
+    temp = temp.previous;
+  }
+  noFill();
+  stroke(255, 0, 0);
+  strokeWeight(5);
+  beginShape();
+  for (var i = 0; i < path.length; i++) {
+    vertex(path[i].i * w + w / 2, path[i].j * h + h / 2);
+  }
+  endShape();
 
   // Pontuacao
   noStroke();
@@ -175,9 +187,9 @@ function draw() {
       r_end = Math.floor(random(rows));
       end = grid[c_end][r_end];
     }
+    clear_previous();
   }
-  
-  
+
   sleep(200);
 }
 
@@ -187,4 +199,12 @@ function sleep(milliseconds) {
   do {
     currentDate = Date.now();
   } while (currentDate - date < milliseconds);
+}
+
+function clear_previous(){
+  for (var i = 0; i < cols; i++) {
+    for (var j = 0; j < rows; j++) {
+      grid[i][j].previous = undefined;
+    }
+  }
 }
