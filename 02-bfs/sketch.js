@@ -153,7 +153,7 @@ function draw() {
   }
 
   // Pontuacao
-  stroke(0);
+  stroke(255);
   strokeWeight(2);
   fill(0, 100, 255);
   textSize(20);
