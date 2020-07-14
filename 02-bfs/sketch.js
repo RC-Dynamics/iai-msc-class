@@ -73,7 +73,7 @@ function draw() {
     }
   }
   var current;
-  console.log(openSet);
+  // console.log(openSet);
 
   // Am I still searching?
   if (openSet.length > 0) {
