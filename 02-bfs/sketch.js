@@ -165,16 +165,17 @@ function draw() {
   endShape();
 
   // Pontuacao
-  noStroke();
+  stroke(255);
+  strokeWeight(3);
   fill(0, 100, 255);
   textSize(20);
   textStyle(BOLD);
-  text('Foods: ' + str(total_f), 10, 30);
+  text('BFS - Foods: ' + str(total_f), 10, 30);
 
   if (current === end){
     start = end;
     total_f++;
-
+    
     openSet = []
     openSet.push(start);
     closedSet = [];
