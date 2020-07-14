@@ -157,7 +157,7 @@ function draw() {
   fill(0, 100, 255);
   textSize(20);
   textStyle(BOLD);
-  text('Foods: ' + str(total_f), 10, 30);
+  text('BFS - Foods: ' + str(total_f), 10, 30);
 
   if (current === end){
     start = end;
