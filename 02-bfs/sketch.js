@@ -154,7 +154,7 @@ function draw() {
 
   // Pontuacao
   stroke(255);
-  strokeWeight(2);
+  strokeWeight(3);
   fill(0, 100, 255);
   textSize(20);
   textStyle(BOLD);
