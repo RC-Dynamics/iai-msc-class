@@ -20,6 +20,7 @@ var finalPath = [];
 // Start and end
 var start;
 var end;
+var current;
 
 // Width and height of each cell of grid
 var w, h;
@@ -56,71 +57,101 @@ function setup() {
   clear_previous();
 
   // Start and end
-  start = grid[0][0]; // TODO: Posicao aleatoria
-  var c_end = Math.floor(random(cols));
-  var r_end = Math.floor(random(rows));
-  end = grid[c_end][r_end];
+  start = grid[0][0];
+  init_search();
   start.h = start.distance(end);
   start.wall = false;
-  end.wall = false;
-  
-  openSet.push(start);
 }
 
 function draw() {
-  var current;
+  var search = true;
 
-  // Am I still searching?
-  if (openSet.length > 0) {
-    // Best next option
-    openSet.sort(compare);
-    current = openSet[0];
+  // Are vehicle in food position?
+  if (current === end){
+    if(path.length === 0){
+      total_f++;
+      
+      start = end;
+      init_search();
+      clear_previous();
+
+    }
+    else {
+      openSet = []
+      closedSet = [];
+      search = false;
+    }
+  }
+  else {
+    // Am I still searching?
+    if (openSet.length > 0) {
+      // Best next option
+      openSet.sort(compare);
+      current = openSet[0];
+      
+      // Did I finish?
+      if (current !== end) {
+        // Best option moves from openSet to closedSet
+        openSet.shift();
+        closedSet.push(current);
     
-    // Did I finish?
-    if (current !== end) {
-      // Best option moves from openSet to closedSet
-      openSet.shift();
-      closedSet.push(current);
-  
-      // Check all the neighbors
-      var neighbors = current.neighbors;
-      for (var i = 0; i < neighbors.length; i++) {
-        var neighbor = neighbors[i];
-  
-        // Valid next spot?
-        if (!closedSet.includes(neighbor) && !neighbor.wall) {
-          tempD = current.g + current.distance(neighbor);
-          
-          var newPath = false;
-          if(openSet.includes(neighbor)){
-            // Better way for reaching neighbot
-            if(tempD < neighbor.g) { 
+        // Check all the neighbors
+        var neighbors = current.neighbors;
+        for (var i = 0; i < neighbors.length; i++) {
+          var neighbor = neighbors[i];
+    
+          // Valid next spot?
+          if (!closedSet.includes(neighbor) && !neighbor.wall) {
+            tempD = current.g + current.distance(neighbor);
+            
+            var newPath = false;
+            if(openSet.includes(neighbor)){
+              // Better way for reaching neighbot
+              if(tempD < neighbor.g) { 
+                neighbor.g = tempD;
+                newPath = true
+              } // else: neighbor closer in OpenSet
+            }
+            else {
               neighbor.g = tempD;
+              openSet.push(neighbor)
               newPath = true
-            } // else: neighbor closer in OpenSet
+            }
+            if(newPath){
+              neighbor.h = neighbor.distance(end);
+              neighbor.f = neighbor.g + neighbor.h;
+              neighbor.previous = current;
+            }
+            
           }
-          else {
-            neighbor.g = tempD;
-            openSet.push(neighbor)
-            newPath = true
-          }
-          if(newPath){
-            neighbor.h = neighbor.distance(end);
-            neighbor.f = neighbor.g + neighbor.h;
-            neighbor.previous = current;
-          }
-          
         }
       }
     }
-  }
-  // Uh oh, no solution
-  else {
-    console.log('no solution')
-    noLoop();
-    return;
+    // Uh oh, no solution
+    else {
+      console.log('no solution')
+      noLoop();
+      return;
+    }
   }
   
+  // If searching, Vehicle stay at start
+  var pos = start;
+  if(search === false){
+     pos = path.shift()
+  }
+  else { // Otherwise it follows path
+    // Find the current path and draw!
+    path = [];
+    var temp = current;
+    path.push(temp);
+    while (temp.previous) {
+      path.push(temp.previous);
+      temp = temp.previous;
+    }
+    path.reverse();
+  }
+
   // Draw current state of everything
   background(255);
   for (var i = 0; i < cols; i++) {
@@ -134,10 +165,10 @@ function draw() {
   stroke(255, 100, 200);
   strokeWeight(w / 2);
   beginShape();
-  vertex(start.i * w + w / 2, start.j * h + h / 2);
-  vertex(start.i * w + w / 2, start.j * h + h / 2);
+  vertex(pos.i * w + w / 2, pos.j * h + h / 2);
+  vertex(pos.i * w + w / 2, pos.j * h + h / 2);
   endShape();
-
+  
   // Comida
   beginShape();
   stroke(0, 255, 0);
@@ -167,14 +198,7 @@ function draw() {
     endShape();
   }
 
-  // Find the current path and draw!
-  path = [];
-  var temp = current;
-  path.push(temp);
-  while (temp.previous) {
-    path.push(temp.previous);
-    temp = temp.previous;
-  }
+  // Path Draw
   noFill();
   stroke(255, 0, 0);
   strokeWeight(5);
@@ -191,25 +215,6 @@ function draw() {
   textSize(20);
   textStyle(BOLD);
   text('A* - Foods: ' + str(total_f), 10, 30);
-
-  if (current === end){
-    start = end;
-    total_f++;
-
-    openSet = []
-    openSet.push(start);
-    closedSet = [];
-
-    var c_end = Math.floor(random(cols));
-    var r_end = Math.floor(random(rows));
-    end = grid[c_end][r_end];
-    while (end.wall){
-      c_end = Math.floor(random(cols));
-      r_end = Math.floor(random(rows));
-      end = grid[c_end][r_end];
-    }
-    clear_previous();
-  }
   
   sleep(200);
 }
@@ -227,6 +232,21 @@ function clear_previous(){
     for (var j = 0; j < rows; j++) {
       grid[i][j].previous = undefined;
     }
+  }
+}
+
+function init_search(){
+  openSet = []
+  openSet.push(start);
+  closedSet = [];
+
+  var c_end = Math.floor(random(cols));
+  var r_end = Math.floor(random(rows));
+  end = grid[c_end][r_end];
+  while (end.wall){
+    c_end = Math.floor(random(cols));
+    r_end = Math.floor(random(rows));
+    end = grid[c_end][r_end];
   }
 }
 
