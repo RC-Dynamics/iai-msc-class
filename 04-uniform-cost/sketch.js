@@ -266,6 +266,7 @@ function printStates(){
   let myDiv1 = createDiv('Food');
   let myDiv2 = createDiv('ClosedSet');
   let myDiv3 = createDiv('OpenSet');
+  let myDiv4 = createDiv('Obstacles');
   myDiv0.position(10, 50);
   myDiv0.style("font-family", "monospace");
   myDiv0.style("font-size", "12pt");
@@ -290,4 +291,10 @@ function printStates(){
   myDiv3.style("padding", "10px");
   myDiv3.style("background-color", "rgba(0, 0, 255, 0.47)");
   myDiv3.style("color", "#000000");
+  myDiv4.position(10, 250);
+  myDiv4.style("font-family", "monospace");
+  myDiv4.style("font-size", "12pt");
+  myDiv4.style("padding", "10px");
+  myDiv4.style("background-color", "rgba(170, 170, 170)");
+  myDiv4.style("color", "#000000");
 }
